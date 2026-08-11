@@ -443,30 +443,30 @@ export function Grammar() {
   const [activeLessonId, setActiveLessonId] = useState(grammarYears[0].lessons[0].id)
   const [showParentUnlock, setShowParentUnlock] = useState(false)
 
-  const years = useMemo(() => filterYears(filter), [filter])
-  const activeYear = getGrammarLesson(activeLessonId).year
-  const activeLesson = getGrammarLesson(activeLessonId).lesson
-
   useEffect(() => {
     const onHash = () => {
-      if (window.location.hash === '#grammar' || window.location.hash.startsWith('#grammar-')) {
-        document.getElementById('grammar')?.scrollIntoView({ behavior: 'smooth' })
+      const hash = window.location.hash
+      if (hash === '#grammar' || hash.startsWith('#grammar-')) {
+        // Delay slightly so sticky header / layout settle
+        requestAnimationFrame(() => {
+          document.getElementById('grammar')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        })
       }
-      const match = window.location.hash.match(/^#grammar-(.+)$/)
+      const match = hash.match(/^#grammar-(.+)$/)
       if (match) {
         const id = match[1]
+        if (grammarYears.some((y) => y.id === id)) {
+          const year = grammarYears.find((y) => y.id === id)!
+          setActiveYearId(year.id)
+          setActiveLessonId(year.lessons[0].id)
+          setCurrentLesson(year.lessons[0].id)
+          return
+        }
         const found = getGrammarLesson(id)
-        if (found.lesson.id === id || grammarYears.some((y) => y.id === id)) {
-          if (grammarYears.some((y) => y.id === id)) {
-            setActiveYearId(id)
-            const year = grammarYears.find((y) => y.id === id)!
-            setActiveLessonId(year.lessons[0].id)
-            setCurrentLesson(year.lessons[0].id)
-          } else {
-            setActiveYearId(found.year.id)
-            setActiveLessonId(found.lesson.id)
-            setCurrentLesson(found.lesson.id)
-          }
+        if (found.lesson.id === id) {
+          setActiveYearId(found.year.id)
+          setActiveLessonId(found.lesson.id)
+          setCurrentLesson(found.lesson.id)
         }
       }
     }
@@ -481,8 +481,15 @@ export function Grammar() {
     setActiveYearId(year.id)
     setActiveLessonId(lesson.id)
     setCurrentLesson(lesson.id)
-    window.history.replaceState(null, '', `#grammar-${lesson.id}`)
+    const nextHash = `#grammar-${lesson.id}`
+    if (window.location.hash !== nextHash) {
+      window.history.replaceState(null, '', nextHash)
+    }
   }
+
+  const visibleYears = useMemo(() => filterYears(filter), [filter])
+  const activeYear = getGrammarLesson(activeLessonId).year
+  const activeLesson = getGrammarLesson(activeLessonId).lesson
 
   return (
     <Section id="grammar" ariaLabelledBy="grammar-heading" className="bg-cloud/50">
@@ -493,22 +500,22 @@ export function Grammar() {
       />
 
       {/* Continue Learning */}
-      <div className="mb-8 overflow-hidden rounded-[2rem] bg-gradient-to-r from-sky-deep via-lilac-deep to-blush-deep p-6 text-white shadow-[var(--shadow-float)] sm:p-8">
+      <div className="mb-8 overflow-hidden rounded-[2rem] bg-gradient-to-r from-sky-deep via-lilac-deep to-blush-deep p-5 text-white shadow-[var(--shadow-float)] sm:p-8">
         <p className="text-sm font-bold uppercase tracking-wide text-white/80">
           Continue Learning
         </p>
         <div className="mt-2 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
+          <div className="min-w-0">
             <p className="text-lg font-semibold text-sun">
               📚 Year {continueInfo.year.year}
             </p>
-            <h3 className="text-2xl font-semibold sm:text-3xl">
+            <h3 className="text-balance text-2xl font-semibold sm:text-3xl">
               {continueInfo.lesson.emoji} {continueInfo.lesson.title}
             </h3>
             <p className="mt-2 text-white/90">Progress: {continueInfo.percent}%</p>
             <div className="mt-2 h-2.5 max-w-sm overflow-hidden rounded-full bg-white/25">
               <div
-                className="h-full rounded-full bg-sun"
+                className="h-full rounded-full bg-sun transition-all"
                 style={{ width: `${Math.min(continueInfo.percent, 100)}%` }}
               />
             </div>
@@ -516,7 +523,14 @@ export function Grammar() {
           <Button
             variant="soft"
             size="lg"
-            onClick={() => selectLesson(continueInfo.lesson.id)}
+            className="shrink-0"
+            onClick={() => {
+              selectLesson(continueInfo.lesson.id)
+              document.getElementById('grammar-player')?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+              })
+            }}
           >
             Continue Lesson →
           </Button>
@@ -560,19 +574,17 @@ export function Grammar() {
       </div>
 
       {/* Visual learning path */}
-      <div className="mb-8 overflow-x-auto pb-2">
-        <ol className="flex min-w-max items-stretch gap-3 sm:min-w-0 sm:grid sm:grid-cols-5">
-          {grammarYears.map((year, index) => {
+      <div className="mb-8">
+        <ol className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {visibleYears.map((year, index) => {
             const unlocked = isYearUnlocked(year.id)
             const done = year.lessons.every((l) => state.lessons[l.id]?.completed)
-            const visible = filter === 'all' || year.filter === filter
-            if (!visible) return null
             return (
-              <li key={year.id} className="relative w-56 sm:w-auto">
-                {index < grammarYears.length - 1 ? (
+              <li key={year.id} className="relative">
+                {index < visibleYears.length - 1 ? (
                   <span
                     aria-hidden="true"
-                    className="absolute -right-3 top-1/2 z-10 hidden -translate-y-1/2 text-sky-deep sm:block"
+                    className="absolute -right-2 top-1/2 z-10 hidden -translate-y-1/2 text-lg font-bold text-sky-deep lg:block"
                   >
                     →
                   </span>
@@ -588,7 +600,7 @@ export function Grammar() {
                     setActiveYearId(year.id)
                     selectLesson(year.lessons[0].id)
                   }}
-                  className={`flex h-full w-full flex-col rounded-[1.75rem] p-5 text-left shadow-[var(--shadow-soft)] transition-all ${
+                  className={`flex h-full w-full flex-col rounded-[1.75rem] p-4 text-left shadow-[var(--shadow-soft)] transition-all sm:p-5 ${
                     year.color
                   } ${activeYearId === year.id ? 'ring-4 ring-sky-deep/40' : ''} ${
                     unlocked ? 'hover:-translate-y-1' : 'opacity-80'
@@ -609,8 +621,10 @@ export function Grammar() {
                     )}
                   </span>
                   <span className="mt-3 text-sm font-bold text-ink-soft">Year {year.year}</span>
-                  <span className="text-lg font-semibold text-ink">{year.title}</span>
-                  <span className="mt-1 text-sm text-ink-soft">{year.description}</span>
+                  <span className="text-base font-semibold leading-snug text-ink sm:text-lg">
+                    {year.title}
+                  </span>
+                  <span className="mt-1 text-sm leading-snug text-ink-soft">{year.description}</span>
                   <span className="mt-3 inline-flex w-fit rounded-full bg-white/80 px-2.5 py-1 text-xs font-bold text-ink">
                     {year.levelLabel}
                   </span>
@@ -660,9 +674,9 @@ export function Grammar() {
         ) : null}
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.4fr]">
+      <div id="grammar-player" className="grid scroll-mt-28 gap-6 lg:grid-cols-[minmax(260px,0.9fr)_1.4fr]">
         {/* Lesson list for active year */}
-        <div className={`rounded-[2rem] ${activeYear.color} p-5 shadow-[var(--shadow-soft)]`}>
+        <div className={`rounded-[2rem] ${activeYear.color} p-4 shadow-[var(--shadow-soft)] sm:p-5`}>
           <h3 className="text-xl font-semibold text-ink">
             {activeYear.emoji} Year {activeYear.year} Lessons
           </h3>
@@ -672,7 +686,7 @@ export function Grammar() {
               🔒 This year is locked. Finish the previous year or unlock it as a parent/teacher.
             </p>
           ) : (
-            <ul className="mt-4 max-h-[28rem] space-y-2 overflow-y-auto pr-1">
+            <ul className="mt-4 max-h-[32rem] space-y-2 overflow-y-auto overscroll-contain pr-1">
               {activeYear.lessons.map((lesson, index) => {
                 const progress = state.lessons[lesson.id]
                 const selected = lesson.id === activeLessonId
@@ -691,15 +705,15 @@ export function Grammar() {
                         {index + 1}
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate font-bold text-ink">
+                        <span className="block font-bold leading-snug text-ink">
                           {lesson.emoji} {lesson.title}
                         </span>
-                        <span className="block truncate text-xs text-ink-soft">
+                        <span className="mt-0.5 block text-xs leading-snug text-ink-soft">
                           {lesson.summary}
                         </span>
                       </span>
                       {progress?.completed ? (
-                        <span className="flex items-center gap-0.5 text-sun-deep" aria-label={`${progress.stars} stars`}>
+                        <span className="flex shrink-0 items-center gap-0.5 text-sun-deep" aria-label={`${progress.stars} stars`}>
                           {Array.from({ length: progress.stars || 1 }).map((_, i) => (
                             <Star key={i} size={14} fill="currentColor" />
                           ))}
@@ -735,7 +749,7 @@ export function Grammar() {
       </div>
 
       {/* Keep years in filtered empty state friendly */}
-      {years.length === 0 ? (
+      {visibleYears.length === 0 ? (
         <p className="mt-6 text-center text-ink-soft">No years match this filter.</p>
       ) : null}
     </Section>

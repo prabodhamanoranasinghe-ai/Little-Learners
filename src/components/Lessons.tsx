@@ -10,14 +10,23 @@ import { speak } from '../utils/speak'
 import { Button } from './ui/Button'
 import { Section } from './ui/Section'
 
-function readCategoryFromHash(): LessonCategoryId {
+function readCategoryFromHash(): LessonCategoryId | null {
   const hash = window.location.hash.replace('#', '')
   if (hash.startsWith('lesson-')) {
     const id = hash.slice('lesson-'.length)
     if (isLessonCategoryId(id)) return id
   }
   if (hash === 'featured' || hash === 'lessons') return 'letters'
-  return 'letters'
+  return null
+}
+
+function isLessonHash(hash = window.location.hash) {
+  const value = hash.replace('#', '')
+  return (
+    value.startsWith('lesson-') ||
+    value === 'featured' ||
+    value === 'lessons'
+  )
 }
 
 export function Lessons() {
@@ -30,10 +39,11 @@ export function Lessons() {
   const lesson = items[index] ?? items[0]
   const progress = Math.round(((index + 1) / items.length) * 100)
 
-  const selectCategory = useCallback((id: LessonCategoryId) => {
+  const selectCategory = useCallback((id: LessonCategoryId, updateHash = true) => {
     setCategoryId(id)
     setIndex(0)
     setFlipped(false)
+    if (!updateHash) return
     const nextHash = `lesson-${id}`
     if (window.location.hash.replace('#', '') !== nextHash) {
       window.history.replaceState(null, '', `#${nextHash}`)
@@ -42,13 +52,18 @@ export function Lessons() {
 
   useEffect(() => {
     const syncFromHash = () => {
-      const next = readCategoryFromHash()
-      selectCategory(next)
-      if (window.location.hash.startsWith('#lesson-') || window.location.hash === '#featured') {
-        document.getElementById('lessons')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
+      if (!isLessonHash()) return
+      const next = readCategoryFromHash() ?? 'letters'
+      selectCategory(next, true)
+      document.getElementById('lessons')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
-    syncFromHash()
+
+    // Only adopt the hash on mount when it already points at lessons —
+    // never overwrite #grammar, #videos, #home, etc.
+    if (isLessonHash()) {
+      syncFromHash()
+    }
+
     window.addEventListener('hashchange', syncFromHash)
     return () => window.removeEventListener('hashchange', syncFromHash)
   }, [selectCategory])

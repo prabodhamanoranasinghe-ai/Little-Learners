@@ -7,7 +7,7 @@ export function Hero() {
     <section
       id="home"
       aria-labelledby="hero-heading"
-      className="relative overflow-hidden px-4 pb-16 pt-8 sm:px-6 sm:pb-20 sm:pt-12 lg:px-8 lg:pb-28"
+      className="relative scroll-mt-24 overflow-hidden px-4 pb-16 pt-8 sm:scroll-mt-28 sm:px-6 sm:pb-20 sm:pt-12 lg:px-8 lg:pb-28"
     >
       <div className="pointer-events-none absolute inset-0 bg-playful" aria-hidden="true" />
 

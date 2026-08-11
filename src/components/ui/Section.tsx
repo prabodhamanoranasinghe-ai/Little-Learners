@@ -12,7 +12,7 @@ export function Section({ id, children, className = '', ariaLabelledBy }: Sectio
     <section
       id={id}
       aria-labelledby={ariaLabelledBy}
-      className={`relative px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24 ${className}`}
+      className={`relative scroll-mt-24 px-4 py-16 sm:scroll-mt-28 sm:px-6 sm:py-20 lg:px-8 lg:py-24 ${className}`}
     >
       <div className="mx-auto w-full max-w-6xl">{children}</div>
     </section>
