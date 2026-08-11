@@ -1,0 +1,51 @@
+Facebook Reels Collection from Little Learners (cutelearn)
+===========================================================
+
+Reel 1 - CUP:
+URL: https://www.facebook.com/reel/997001780051033/?s=fb_shorts_profile&stack_idx=0
+Title: Chair, Table, Cup, Spoon (household items)
+Topic: Household items/furniture/utensils vocabulary
+Views: 1K
+
+
+Reel 2 - BLUE:
+URL: https://www.facebook.com/reel/2480974462400756/?s=fb_shorts_profile&stack_idx=0
+Title: Blue (colors)
+Topic: Colors learning
+Views: 451
+
+
+Reel 3 - TOMATO:
+URL: https://www.facebook.com/reel/1730584538770689/?s=fb_shorts_profile&stack_idx=0
+Title: Tomato (vegetables)
+Topic: Vegetables/Food learning
+Views: 1.8K
+
+
+Reel 4 - CUCUMBER:
+URL: https://www.facebook.com/reel/1575101010958572/?s=fb_shorts_profile&stack_idx=0
+Title: Cucumber (vegetables)
+Topic: Vegetables/Food learning
+Views: 1K
+
+
+===========================================================
+SUMMARY OF FINDINGS
+===========================================================
+
+Successfully extracted 4 Facebook Reels from Little Learners (cutelearn) page.
+All reels are publicly accessible without login.
+
+LIMITATIONS ENCOUNTERED:
+- Posts section requires login to view
+- Videos section shows content but URLs are not in standard reel format
+- Only 4 reels are visible publicly in the Reels tab without authentication
+
+NOTES:
+- All reel URLs follow the format: https://www.facebook.com/reel/[ID]/?s=fb_shorts_profile&stack_idx=0
+- All reels feature a child learning vocabulary with visual text overlays
+- Topics covered: household items, colors, and vegetables
+- Content is suitable for early childhood education
+
+The reels can be embedded using standard Facebook embed methods.
+
