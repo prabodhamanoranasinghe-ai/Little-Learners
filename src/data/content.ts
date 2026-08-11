@@ -1,6 +1,7 @@
 export const navLinks = [
   { label: 'Home', href: '#home' },
   { label: 'Learn', href: '#learn' },
+  { label: 'Grammar', href: '#grammar' },
   { label: 'Videos', href: '#videos' },
   { label: 'Activities', href: '#activities' },
   { label: 'About', href: '#about' },
@@ -310,6 +311,7 @@ export const faqs = [
 export const footerLinks = [
   { label: 'Home', href: '#home' },
   { label: 'Learn', href: '#learn' },
+  { label: 'Grammar', href: '#grammar' },
   { label: 'Videos', href: '#videos' },
   { label: 'Activities', href: '#activities' },
   { label: 'About', href: '#about' },
