@@ -33,7 +33,7 @@ export function Categories() {
               variant="secondary"
               size="sm"
               className="mt-5 w-full"
-              href={`#featured`}
+              href={`#lesson-${category.id}`}
             >
               Learn Now
               <ArrowRight size={16} aria-hidden="true" />

@@ -163,6 +163,7 @@ export const activities = [
     title: 'Match the Letter',
     description: 'Match each letter with the right word and picture.',
     color: 'bg-sky-soft',
+    lessonId: 'letters',
   },
   {
     id: 'match-fruit',
@@ -170,6 +171,7 @@ export const activities = [
     title: 'Match the Fruit',
     description: 'Find the fruit that matches the word you hear.',
     color: 'bg-blush/25',
+    lessonId: 'fruits',
   },
   {
     id: 'find-color',
@@ -177,6 +179,7 @@ export const activities = [
     title: 'Find the Color',
     description: 'Tap the object that shows the color you need.',
     color: 'bg-lilac/30',
+    lessonId: 'colors',
   },
   {
     id: 'guess-animal',
@@ -184,6 +187,7 @@ export const activities = [
     title: 'Guess the Animal',
     description: 'Listen to the sound and guess which animal it is.',
     color: 'bg-sun/45',
+    lessonId: 'animals',
   },
   {
     id: 'count-objects',
@@ -191,6 +195,7 @@ export const activities = [
     title: 'Count the Objects',
     description: 'Count the objects and pick the correct number.',
     color: 'bg-mint/35',
+    lessonId: 'numbers',
   },
   {
     id: 'match-shape',
@@ -198,6 +203,7 @@ export const activities = [
     title: 'Match the Shape',
     description: 'Match circles, squares, triangles and more.',
     color: 'bg-sky-soft',
+    lessonId: 'shapes',
   },
 ] as const
 

@@ -1,7 +1,7 @@
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
 import { Categories } from './components/Categories'
-import { FeaturedLesson } from './components/FeaturedLesson'
+import { Lessons } from './components/Lessons'
 import { HowItWorks } from './components/HowItWorks'
 import { Videos } from './components/Videos'
 import { Activities } from './components/Activities'
@@ -25,7 +25,7 @@ function App() {
       <main id="main">
         <Hero />
         <Categories />
-        <FeaturedLesson />
+        <Lessons />
         <HowItWorks />
         <Videos />
         <Activities />
