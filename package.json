@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:pages": "tsc -b && VITE_BASE_PATH=/Little-Learners/ vite build",
     "lint": "oxlint",
     "preview": "vite preview"
   },

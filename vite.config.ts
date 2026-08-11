@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  // Project Pages URL: https://<user>.github.io/Little-Learners/
-  base: '/Little-Learners/',
+  // Set VITE_BASE_PATH=/Little-Learners/ for GitHub Pages production builds.
+  base: process.env.VITE_BASE_PATH || '/',
   plugins: [react(), tailwindcss()],
 })

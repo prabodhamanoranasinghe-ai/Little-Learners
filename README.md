@@ -29,13 +29,21 @@ Open the local URL shown in the terminal (usually `http://localhost:5173`).
 
 ## GitHub Pages
 
-The site deploys automatically to GitHub Pages on every push to `main` via GitHub Actions.
+The production site is built for:
 
-Live URL (after Pages is enabled):
+**https://prabodhamanoranasinghe-ai.github.io/Little-Learners/**
 
-https://prabodhamanoranasinghe-ai.github.io/Little-Learners/
+### One-time setup (required)
 
-To publish manually from this branch, merge to `main` or run the **Deploy to GitHub Pages** workflow.
+GitHub Pages must be enabled once by a repo admin:
+
+1. Open [Pages settings](https://github.com/prabodhamanoranasinghe-ai/Little-Learners/settings/pages)
+2. Under **Build and deployment → Source**, choose **GitHub Actions**
+3. Re-run the **Deploy to GitHub Pages** workflow from the Actions tab
+
+**Alternative:** choose **Deploy from a branch**, set branch to `gh-pages` and folder to `/` (root). A built site is already on that branch.
+
+After enabling, every push to `main` redeploys via `.github/workflows/deploy-pages.yml`.
 
 ## Brand
 
