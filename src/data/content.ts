@@ -115,43 +115,12 @@ export const howItWorks = [
 
 export const socialLinks = {
   facebook: 'https://www.facebook.com/cutelearn/',
+  facebookReels: 'https://www.facebook.com/cutelearn/reels/',
   tiktok: 'https://www.tiktok.com/@littlelearners260',
 } as const
 
+/** Featured Facebook reels shown as playable cards. */
 export const videos = [
-  {
-    id: 'tt-colors',
-    title: 'Learn Colors',
-    description: 'Red, blue, yellow and green — cute color learning for little ones.',
-    duration: '1:00',
-    emoji: '🎨',
-    gradient: 'from-lilac to-blush',
-    source: 'tiktok' as const,
-    url: 'https://www.tiktok.com/@littlelearners260/video/7672834022413094164',
-    embedId: '7672834022413094164',
-  },
-  {
-    id: 'tt-vegetables',
-    title: 'Learn Vegetables',
-    description: 'Tomato, carrot and cucumber — everyday veggie words made cute.',
-    duration: '1:00',
-    emoji: '🥕',
-    gradient: 'from-mint to-sun',
-    source: 'tiktok' as const,
-    url: 'https://www.tiktok.com/@littlelearners260/video/7672833222198578452',
-    embedId: '7672833222198578452',
-  },
-  {
-    id: 'tt-cucumber',
-    title: 'Learn Vegetables: Cucumber',
-    description: 'Practice saying cucumber and more vegetable words in English.',
-    duration: '1:00',
-    emoji: '🥒',
-    gradient: 'from-mint to-sky',
-    source: 'tiktok' as const,
-    url: 'https://www.tiktok.com/@littlelearners260/video/7672832998771548436',
-    embedId: '7672832998771548436',
-  },
   {
     id: 'fb-household',
     title: 'Everyday Words at Home',
@@ -159,7 +128,6 @@ export const videos = [
     duration: 'Reel',
     emoji: '🏠',
     gradient: 'from-sky to-lilac',
-    source: 'facebook' as const,
     url: 'https://www.facebook.com/reel/997001780051033',
     embedId: '997001780051033',
   },
@@ -170,7 +138,6 @@ export const videos = [
     duration: 'Reel',
     emoji: '💙',
     gradient: 'from-sky to-sky-deep',
-    source: 'facebook' as const,
     url: 'https://www.facebook.com/reel/2480974462400756',
     embedId: '2480974462400756',
   },
@@ -181,9 +148,18 @@ export const videos = [
     duration: 'Reel',
     emoji: '🍅',
     gradient: 'from-blush to-sun',
-    source: 'facebook' as const,
     url: 'https://www.facebook.com/reel/1730584538770689',
     embedId: '1730584538770689',
+  },
+  {
+    id: 'fb-cucumber',
+    title: 'Learn Vegetables: Cucumber',
+    description: 'Practice cucumber, carrot, tomato and more veggies.',
+    duration: 'Reel',
+    emoji: '🥒',
+    gradient: 'from-mint to-sky',
+    url: 'https://www.facebook.com/reel/1575101010958572',
+    embedId: '1575101010958572',
   },
 ] as const
 
